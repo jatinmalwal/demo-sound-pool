@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,7 +17,8 @@ public class LauncherActivity extends Activity implements OnTouchListener {
 	final static int MAX_STREAMS = 5;
 	private boolean isLoaded = false;
 	private int soundOneID;
-	private int soundTwoID;
+
+	// private int soundTwoID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class LauncherActivity extends Activity implements OnTouchListener {
 			}
 		});
 		soundOneID = soundPool.load(this, R.raw.shoot_1, 1);
-		soundTwoID = soundPool.load(this, R.raw.shoot_2, 1);
+		// soundTwoID = soundPool.load(this, R.raw.shoot_2, 1);
 
 	}
 
@@ -54,11 +56,25 @@ public class LauncherActivity extends Activity implements OnTouchListener {
 			float maxVolume = (float) audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 			float volume = actualVolume / maxVolume;
 
+			Log.d("TESTING", actualVolume + ":  actualVolume");
+			Log.d("TESTING", maxVolume + ":  maxVolume");
+			Log.d("TESTING", volume + ": volume");
+
 			if (isLoaded) {
 				soundPool.play(soundOneID, volume, volume, 1, 0, 1f);
 			}
+
 		}
 		return false;
+	}
+
+	@Override
+	protected void onStop() {
+		if (soundPool != null) {
+			// To release all the resources of soundPool
+			soundPool.release();
+		}
+		super.onStop();
 	}
 
 }
