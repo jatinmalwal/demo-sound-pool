@@ -1,5 +1,10 @@
 package com.jatin.malwal.jmsoundpooldemo;
 
+/**
+ * @author Jatin Malwal
+ *
+ */
+
 import android.app.Activity;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -18,7 +23,7 @@ public class LauncherActivity extends Activity implements OnTouchListener {
 	private boolean isLoaded = false;
 	private int soundOneID;
 
-	// private int soundTwoID;
+	private int soundTwoID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +37,14 @@ public class LauncherActivity extends Activity implements OnTouchListener {
 		soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
 			@Override
 			public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+				Log.d("TESTING", "sampleId :" + sampleId + " status :" + status);
 				isLoaded = true;
 			}
 		});
 		soundOneID = soundPool.load(this, R.raw.shoot_1, 1);
-		// soundTwoID = soundPool.load(this, R.raw.shoot_2, 1);
+		soundTwoID = soundPool.load(this, R.raw.shoot_2, 1);
+		Log.d("TESTING", "soundOneID :" + soundOneID);
+		Log.d("TESTING", "soundTwoID :" + soundTwoID);
 
 	}
 
